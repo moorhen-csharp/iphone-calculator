@@ -1,4 +1,3 @@
-// Обновление времени в статус-баре
 function updateTime() {
     const timeElement = document.getElementById('time');
     const now = new Date();
@@ -7,10 +6,8 @@ function updateTime() {
     timeElement.textContent = `${hours}:${minutes}`;
 }
 
-// Имитация процента заряда батареи
 function updateBattery() {
     const percentElement = document.getElementById('battery-percent');
-    // Можно сделать рандом или статично, например, 87%
     percentElement.textContent = '87%';
 }
 
@@ -24,19 +21,16 @@ class Calculator {
         this.currentOperandElement = currentOperandElement;
         this.clear();
     }
-
     clear() {
         this.currentOperand = '0';
         this.previousOperand = '';
         this.operation = undefined;
     }
-
     delete() {
         if (this.currentOperand === '0') return;
         this.currentOperand = this.currentOperand.toString().slice(0, -1);
         if (this.currentOperand === '') this.currentOperand = '0';
     }
-
     appendNumber(number) {
         if (number === '.' && this.currentOperand.includes('.')) return;
         if (this.currentOperand === '0' && number !== '.') {
@@ -45,7 +39,6 @@ class Calculator {
             this.currentOperand = this.currentOperand.toString() + number;
         }
     }
-
     chooseOperation(operation) {
         if (this.currentOperand === '') return;
         if (this.previousOperand !== '') {
@@ -55,13 +48,11 @@ class Calculator {
         this.previousOperand = this.currentOperand;
         this.currentOperand = '0';
     }
-
     compute() {
         let computation;
         const prev = parseFloat(this.previousOperand);
         const current = parseFloat(this.currentOperand);
         if (isNaN(prev) || isNaN(current)) return;
-
         switch (this.operation) {
             case '+':
                 computation = prev + current;
@@ -82,26 +73,21 @@ class Calculator {
             default:
                 return;
         }
-
         this.currentOperand = computation.toString();
         this.operation = undefined;
         this.previousOperand = '';
     }
-
     getPercent() {
         this.currentOperand = (parseFloat(this.currentOperand) / 100).toString();
     }
-
     toggleSign() {
         this.currentOperand = (parseFloat(this.currentOperand) * -1).toString();
     }
-
     getDisplayNumber(number) {
         const stringNumber = number.toString();
         const integerDigits = parseFloat(stringNumber.split('.')[0]);
         const decimalDigits = stringNumber.split('.')[1];
         let integerDisplay;
-        
         if (isNaN(integerDigits)) {
             integerDisplay = '0';
         } else {
@@ -109,14 +95,12 @@ class Calculator {
                 maximumFractionDigits: 0
             });
         }
-
         if (decimalDigits != null) {
             return `${integerDisplay}.${decimalDigits}`;
         } else {
             return integerDisplay;
         }
     }
-
     updateDisplay() {
         this.currentOperandElement.innerText = this.getDisplayNumber(this.currentOperand);
         if (this.operation != null) {
@@ -175,7 +159,6 @@ percentButton.addEventListener('click', () => {
     calculator.updateDisplay();
 });
 
-// --- Конфетти ---
 const confettiColors = [
     '#ff595e', '#ffca3a', '#8ac926', '#1982c4', '#6a4c93', '#fff', '#f72585', '#b5179e', '#7209b7', '#3a86ff'
 ];
@@ -208,7 +191,47 @@ for (let i = 0; i < confettiCount; i++) {
     });
 }
 
-// --- Фейерверки ---
+function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < confetti.length; i++) {
+        let c = confetti[i];
+        ctx.beginPath();
+        ctx.ellipse(
+            c.x + c.tilt,
+            c.y,
+            c.r,
+            c.r / 2,
+            c.tiltAngle,
+            0,
+            2 * Math.PI
+        );
+        ctx.fillStyle = c.color;
+        ctx.fill();
+    }
+    updateConfetti();
+    drawFireworks();
+    requestAnimationFrame(drawConfetti);
+}
+
+function updateConfetti() {
+    for (let i = 0; i < confetti.length; i++) {
+        let c = confetti[i];
+        c.y += c.d;
+        c.tiltAngle += c.tiltAngleIncrement;
+        c.tilt = Math.sin(c.tiltAngle) * 10;
+        if (c.y > window.innerHeight) {
+            c.x = randomBetween(0, window.innerWidth);
+            c.y = randomBetween(-20, 0);
+            c.r = randomBetween(5, 10);
+            c.d = randomBetween(2, 6);
+            c.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            c.tilt = randomBetween(-10, 10);
+            c.tiltAngle = randomBetween(0, Math.PI * 2);
+            c.tiltAngleIncrement = randomBetween(0.01, 0.05);
+        }
+    }
+}
+
 class FireworkParticle {
     constructor(x, y, color, angle, speed) {
         this.x = x;
@@ -268,7 +291,7 @@ let fireworkTimer = 0;
 function drawFireworks() {
     if (fireworkTimer <= 0) {
         fireworks.push(new Firework());
-        fireworkTimer = randomBetween(60, 120); // интервал между фейерверками
+        fireworkTimer = randomBetween(60, 120);
     } else {
         fireworkTimer--;
     }
@@ -277,49 +300,4 @@ function drawFireworks() {
     fireworks = fireworks.filter(fw => fw.alive);
 }
 
-function drawConfetti() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Конфетти
-    for (let i = 0; i < confetti.length; i++) {
-        let c = confetti[i];
-        ctx.beginPath();
-        ctx.ellipse(
-            c.x + c.tilt,
-            c.y,
-            c.r,
-            c.r / 2,
-            c.tiltAngle,
-            0,
-            2 * Math.PI
-        );
-        ctx.fillStyle = c.color;
-        ctx.fill();
-    }
-    updateConfetti();
-    // Фейерверки
-    drawFireworks();
-    requestAnimationFrame(drawConfetti);
-}
-
-function updateConfetti() {
-    for (let i = 0; i < confetti.length; i++) {
-        let c = confetti[i];
-        c.y += c.d;
-        c.tiltAngle += c.tiltAngleIncrement;
-        c.tilt = Math.sin(c.tiltAngle) * 10;
-        if (c.y > window.innerHeight) {
-            c.x = randomBetween(0, window.innerWidth);
-            c.y = randomBetween(-20, 0);
-            c.r = randomBetween(5, 10);
-            c.d = randomBetween(2, 6);
-            c.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-            c.tilt = randomBetween(-10, 10);
-            c.tiltAngle = randomBetween(0, Math.PI * 2);
-            c.tiltAngleIncrement = randomBetween(0.01, 0.05);
-        }
-    }
-}
-
-drawConfetti();
-
-// --- Конец конфетти --- 
+drawConfetti(); 
