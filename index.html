@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS Калькулятор</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="confetti-canvas"></canvas>
+    <div class="iphone-frame">
+        <div class="dynamic-island">
+            <span class="island-camera"></span>
+        </div>
+        <div class="status-bar">
+            <div class="status-left">
+                <span class="time" id="time">9:41</span>
+                <span class="signal-bars">
+                    <span class="bar bar-1"></span>
+                    <span class="bar bar-2"></span>
+                    <span class="bar bar-3"></span>
+                    <span class="bar bar-4"></span>
+                </span>
+                <span class="wifi-icon">
+                    <span class="wifi-dot"></span>
+                    <span class="wifi-wave wave-1"></span>
+                    <span class="wifi-wave wave-2"></span>
+                    <span class="wifi-wave wave-3"></span>
+                </span>
+            </div>
+            <div class="status-right">
+                <div class="battery">
+                    <span class="battery-percent" id="battery-percent">100%</span>
+                    <span class="battery-icon">
+                        <span class="battery-body">
+                            <span class="battery-level" id="battery-level"></span>
+                        </span>
+                        <span class="battery-cap"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="calculator">
+            <div class="display">
+                <div class="previous-operand"></div>
+                <div class="current-operand">0</div>
+            </div>
+            <div class="buttons">
+                <button class="special">AC</button>
+                <button class="special">±</button>
+                <button class="special">%</button>
+                <button class="operator">÷</button>
+                
+                <button class="number">7</button>
+                <button class="number">8</button>
+                <button class="number">9</button>
+                <button class="operator">×</button>
+                
+                <button class="number">4</button>
+                <button class="number">5</button>
+                <button class="number">6</button>
+                <button class="operator">-</button>
+                
+                <button class="number">1</button>
+                <button class="number">2</button>
+                <button class="number">3</button>
+                <button class="operator">+</button>
+                
+                <button class="number zero">0</button>
+                <button class="number">.</button>
+                <button class="operator">=</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
