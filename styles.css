@@ -402,4 +402,33 @@ button:active::after {
 
 .status-bar {
     z-index: 10;
+}
+
+.moorhen-label {
+    position: fixed;
+    right: 24px;
+    bottom: 18px;
+    font-size: 1.3rem;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    letter-spacing: 0.15em;
+    opacity: 0.95;
+    z-index: 1000;
+    pointer-events: none;
+    user-select: none;
+    background: linear-gradient(
+        90deg,
+        #ff595e, #ffca3a, #8ac926, #1982c4, #6a4c93,
+        #ff595e, #ffca3a, #8ac926, #1982c4, #6a4c93,
+        #ff595e, #ffca3a, #8ac926, #1982c4, #6a4c93
+    );
+    background-size: 400% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: moorhen-rgb 12s linear infinite;
+    text-shadow: none;
+}
+
+@keyframes moorhen-rgb {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
 } 
